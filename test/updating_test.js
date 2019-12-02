@@ -8,7 +8,7 @@ describe("updating records", function() {
   beforeEach(function(done) {
     char = new MarioChar({
       name: "Luigi",
-      weight: "50"
+      weight: 50
     });
     //Save method is used on each instance/schema whereas find method is used on the entire model
     //mongoose gives us the save mehtod, we're already connected to the mongo database. This is an async request.
@@ -34,4 +34,14 @@ describe("updating records", function() {
   });
 
   //Next Test
+  it("increments the weight by 1", function(done) {
+    //Empty object means it will grab all records in schema
+    //$inc is a builtin operator that increments the properties listed in the following object {weight: 1}, increment weight by 1
+    MarioChar.updateMany({}, { $inc: { weight: 1 } }).then(function() {
+      MarioChar.findOne({ name: "Luigi" }).then(function(record) {
+        assert(record.weight === 51);
+        done();
+      });
+    });
+  });
 });

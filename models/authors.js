@@ -5,14 +5,20 @@ const Schema = mongoose.Schema;
 //Create schema and model
 //Schema is individual structure of each record in model
 //Model is collection of records/schema
-const MarioCharSchema = new Schema({
+const BookSchema = new Schema({
+  title: String,
+  pages: Number
+});
+
+const AuthorSchema = new Schema({
   name: String,
-  weight: Number
+  age: Number,
+  books: [BookSchema]
 });
 
 //mariochar will automatically turn into mariochars because of mongoose
-const MarioChar = mongoose.model("mariochar", MarioCharSchema);
+const Author = mongoose.model("author", AuthorSchema);
 
-module.exports = MarioChar;
+module.exports = Author;
 
 //In other files it will be used like: const myChar = new MarioChar({name, weight})
